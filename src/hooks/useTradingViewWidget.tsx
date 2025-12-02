@@ -5,8 +5,6 @@ const useTradingViewWidget = (ref: RefObject<HTMLDivElement | null>, scriptSuffi
         if(!ref || !ref.current) return;
         if(ref.current.dataset.loaded) return;
 
-        console.log('ref is not null')
-
         ref.current.innerHTML = `<div class="tradingview-widget-container__widget" style="width: 100%; height: 100%"></div>`
         const script = document.createElement("script");
         script.src = `https://s3.tradingview.com/external-embedding/embed-widget-${scriptSuffix}`;
@@ -14,6 +12,7 @@ const useTradingViewWidget = (ref: RefObject<HTMLDivElement | null>, scriptSuffi
         script.async = true;
         script.innerHTML = JSON.stringify(config);
         ref.current.appendChild(script);
+        ref.current.dataset.loaded = 'true'
         return () => {
             if(!ref || !ref.current) return;
             ref.current.innerHTML = ''

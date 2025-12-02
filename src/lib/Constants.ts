@@ -96,7 +96,7 @@ export const TOP_STORIES_WIDGET_CONFIG = {
 export const MARKET_DATA_WIDGET_CONFIG = {
     title: 'Stocks',
     width: '100%',
-    height: 600,
+    height: '600',
     locale: 'en',
     showSymbolLogo: true,
     colorTheme: 'dark',

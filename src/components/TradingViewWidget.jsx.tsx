@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useRef, memo } from 'react';
+import React, {useRef, memo } from 'react';
 import useTradingViewWidget from "@/hooks/useTradingViewWidget";
 
 interface WidgetProps {
