@@ -29,7 +29,7 @@ const UserDropDown = () => {
                         (
                             <Image src={user.avatar} alt={user.name} width={460} height={460} className='w-10 h-10 rounded-full'/>
                         ) : (
-                            <div className='bg-purple-900 h-10 w-10 text-xl rounded-full text-center leading-10 font-extrabold hover:cursor-pointer'>
+                            <div className='bg-purple-900 h-10 w-10 text-xl rounded-full text-center leading-10 font-semibold hover:cursor-pointer'>
                                 {user.name.charAt(0).toUpperCase()}
                             </div>
                         )
