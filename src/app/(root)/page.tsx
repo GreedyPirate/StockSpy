@@ -9,7 +9,7 @@ import {
 
 function Home() {
     return (
-        <div className='flex min-h-screen home-wrapper '>
+        <div className='flex scrollbar-hide-default home-wrapper '>
             <section className='grid home-section'>
                 <div className='col-span-1 md:col-span-1 xl:col-span-1'>
                     <TradingViewWidget

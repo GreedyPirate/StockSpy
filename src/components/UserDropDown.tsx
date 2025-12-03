@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+'use client';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -14,6 +14,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const UserDropDown = () => {
     const user = {
@@ -21,6 +22,7 @@ const UserDropDown = () => {
         email: 'jaynnay@gmail.com',
         avatar: 'https://avatars.githubusercontent.com/u/14834990?v=4',
     }
+    const router = useRouter();
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -79,7 +81,7 @@ const UserDropDown = () => {
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuItem disabled>API</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={() => router.push('/sign-in')}>
                     Log out
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
