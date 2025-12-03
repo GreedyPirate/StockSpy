@@ -487,17 +487,3 @@
 .scrollbar-hide-default::-webkit-scrollbar-thumb:hover {
   background-color: #9095A1;
 }
-
-.select-item-flag {
-    font-family: "Segoe UI Symbol", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif;
-    font-size: 1.1em; /* 稍微放大 */
-}
-
-.select-item > span {
-    /* 强制更大的字体 */
-    font-size: 1.5rem !important; 
-    /* 强制行高为 1 */
-    line-height: 1 !important; 
-    /* 强制对齐 */
-    vertical-align: middle !important;
-}

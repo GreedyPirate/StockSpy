@@ -6,5 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function isWindows(){
+  // except server-side rendering
+  if (typeof navigator === 'undefined') return false;
   return /Win/.test(navigator.userAgent);
 };
