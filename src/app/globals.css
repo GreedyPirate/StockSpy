@@ -164,7 +164,7 @@
     @apply flex flex-col justify-between lg:flex-row h-screen bg-gray-900 relative overflow-hidden;
   }
   .auth-logo {
-    @apply pt-6 lg:pt-8 mb-8 lg:mb-12;
+    @apply mt-6 lg:mt-8 mb-8 lg:mb-12;
   }
   .auth-left-section {
     @apply w-full lg:w-[45%] lg:h-screen px-6 lg:px-16 flex flex-col overflow-y-auto;
@@ -179,7 +179,7 @@
     @apply text-xs md:text-lg font-bold text-gray-400 not-italic;
   }
   .auth-dashboard-preview {
-    @apply border-6 border-gray-800 left-0 hidden w-[1024px] h-auto max-w-none lg:block rounded-xl shadow-2xl;
+    @apply border-6 border-gray-800 left-0 top-10 hidden w-[1600px] h-auto max-w-none lg:block rounded-xl shadow-2xl;
   }
   .form-title {
     @apply text-4xl font-bold text-gray-400 mb-10;
@@ -486,4 +486,18 @@
 
 .scrollbar-hide-default::-webkit-scrollbar-thumb:hover {
   background-color: #9095A1;
+}
+
+.select-item-flag {
+    font-family: "Segoe UI Symbol", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif;
+    font-size: 1.1em; /* 稍微放大 */
+}
+
+.select-item > span {
+    /* 强制更大的字体 */
+    font-size: 1.5rem !important; 
+    /* 强制行高为 1 */
+    line-height: 1 !important; 
+    /* 强制对齐 */
+    vertical-align: middle !important;
 }
