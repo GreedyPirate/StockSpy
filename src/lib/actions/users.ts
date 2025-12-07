@@ -1,38 +1,34 @@
 'use server'
-import { authClient } from "@/lib/betterAuth/auth";
-import { C } from "node_modules/better-auth/dist/index-COnelCGa.mjs";
+import { auth } from "@/lib/betterAuth/auth";
+import { headers } from "next/headers";
+import {APIError} from "better-auth";
 
-interface SignUpResponse {
-    success: boolean;
-    message?: string;
-}
-
-interface SignInResponse {
-    success: boolean;
-    message?: string;
-}
-
-export async function SignUpWithEmailStyle({ email, fullName, password, country, investmentGoals, riskTolerance, preferredIndustry }: SignUpFormData): Promise<SignUpResponse> {
+export const SignUpWithEmailStyle = async (
+        { email, fullName, password, country, profession, investmentGoals, riskTolerance, preferredIndustry }: SignUpFormData
+    ): Promise<SignUpResponse> => {
     try {
-        const response = await authClient.api.signUpEmail(
+        const response = await auth.api.signUpEmail(
             {
                 body: {
                     email,
                     password,
                     name: fullName,
+                    // @ts-expect-error — custom fields not in inferred type yet
+                    country, profession, investmentGoals, riskTolerance, preferredIndustry
                 }
             }
         );
         return { success: true };
-    } catch (error:any) {
+    } catch (error: unknown) {
         console.error('better-auth error sign up', JSON.stringify(error));
-        return { success: false, message: error.body?.message || 'An error occurred during sign up.' };
+        return { success: false, message: error instanceof APIError ?  error.body?.message : 'An error occurred during sign up.' };
     }
 }
 
-export async function SignInWithEmailStyle({ email, password }: SignInFormData): Promise<SignInResponse> {
+export const SignInWithEmailStyle = async ({ email, password }: SignInFormData): Promise<SignInResponse> => {
     try {
-        const response = await authClient.api.signInEmail(
+        console.log('better-auth sign in', JSON.stringify({ email, password }))
+        const response = await auth.api.signInEmail(
             {
                 body: {
                     email,
@@ -40,9 +36,37 @@ export async function SignInWithEmailStyle({ email, password }: SignInFormData):
                 }
             }
         );
-        return { success: true };
-    } catch (error: any) {
+        console.log('better-auth sign in response', JSON.stringify(response));
+        return { success: true, user: response.user };
+    } catch (error: unknown) {
         console.error('better-auth error sign in', JSON.stringify(error));
-        return { success: false, message: error.body?.message || 'An error occurred during sign in.' };
+        return { success: false, message: error instanceof APIError ?  error.body?.message : 'An error occurred during sign in.' };
+    }
+}
+
+
+export const signOut = async () => {
+    try {
+        await auth.api.signOut({ headers: await headers() });
+    } catch (error: unknown) {
+        console.log('Sign out failed', error)
+        return { success: false, message: error instanceof APIError ?  error.body?.message : 'An error occurred during sign in.' };
+    }
+}
+
+export const deleteAccount = async (password: string) => {
+    try {
+        const info = await auth.api.deleteUser({
+            body: {
+                password
+            },
+            headers: await headers(),
+        });
+        await signOut();
+        console.log('better-auth delete account response', JSON.stringify(info))
+        return { success: true };
+    } catch (e) {
+        console.log('Delete account failed', e)
+        return { success: false, error: 'Delete account failed' }
     }
 }

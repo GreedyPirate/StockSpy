@@ -4,6 +4,7 @@ declare global {
         email: string;
         password: string;
         country: string;
+        profession: string;
         investmentGoals: string;
         riskTolerance: string;
         preferredIndustry: string;
@@ -13,6 +14,7 @@ declare global {
         email: string;
         password: string;
     }
+
     type FormInputProps = {
         name: string;
         label: string;
@@ -46,6 +48,22 @@ declare global {
         error?: FieldError;
     };
 
+    type SignUpResponse = {
+        success: boolean;
+        message?: string;
+    }
+    
+    type UserInfo = {
+        name: string;
+        email: string;
+        emailVerified: boolean;
+    }
+    
+    type SignInResponse = {
+        success: boolean;
+        user?: UserInfo;
+        message?: string;
+    }
 }
 
 export { };

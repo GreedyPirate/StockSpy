@@ -1,12 +1,17 @@
 import Header from "@/components/Header";
-import { authClient } from "@/lib/betterAuth/auth";
+import { auth } from "@/lib/betterAuth/auth";
 import { redirect } from "next/navigation";
 import {headers} from "next/headers";
+
 const Layout = async ({children} : {children:React.ReactNode}) => {
-    const session = await authClient.api.getSession({headers: await headers()});
+    const session = await auth.api.getSession({headers: await headers()});
     if(!session?.user){
         redirect('/sign-in');
     }
+    if (session.user.emailVerified === false) {
+        redirect('/verification');
+    }
+
     return (
         <main className="min-h-screen text-gray-400">
             <Header />

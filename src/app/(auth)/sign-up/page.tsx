@@ -2,7 +2,7 @@
 import InputItem from '@/components/form/InputItem'
 import { useForm } from "react-hook-form"
 import { SelectionList } from '@/components/form/SelectionList'
-import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '@/lib/Constants'
+import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, PROFESSION, RISK_TOLERANCE_OPTIONS } from '@/lib/Constants'
 import { Button } from '@/components/ui/button'
 import FooterLink from '@/components/FooterLink'
 import CountrySelectItem from '@/components/form/CountrySelectItem'
@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 const SignUp = () => {
     const router = useRouter()
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, } = useForm<SignUpFormData>({
-        defaultValues: { fullName: '', email: '', password: '', country: '', investmentGoals: '', riskTolerance: '', preferredIndustry: '' },
+        defaultValues: { fullName: '', email: '', password: '', country: '', profession:'', investmentGoals: '', riskTolerance: '', preferredIndustry: '' },
         mode: 'onBlur',
     })
 
@@ -22,9 +22,8 @@ const SignUp = () => {
        if (!response.success) {
             toast.error(response.message || 'Sign up failed. Please try again.')
             return
-       }
-       toast.success('Sign up successful. Please check your email for verification.')
-       router.push('/')
+        }
+        router.push('/verification')
     }
     const vaildStrongPwd = (pwd: string) => {
         const strongPwdRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
@@ -69,6 +68,14 @@ const SignUp = () => {
                         label='Country'
                         control={control}
                         error={errors.country} />
+                        
+                    <SelectionList
+                        label='PROFESSION'
+                        name='profession'
+                        placeholder='Select your profession'
+                        control={control}
+                        options={PROFESSION}
+                        error={errors.profession} />
                     <SelectionList
                         label='Investment Goals'
                         name='investmentGoals'

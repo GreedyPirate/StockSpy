@@ -6,9 +6,10 @@ import FooterLink from '@/components/FooterLink'
 import { SignInWithEmailStyle } from '@/lib/actions';
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-
+import { useUserStore } from '@/store/userStrore';
 const SignIn = () => {
     const router = useRouter()
+    const { setUserInfo } = useUserStore();
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, } = useForm<SignInFormData>({
         defaultValues: { email: '', password: '' },
         mode: 'onBlur',
@@ -19,6 +20,11 @@ const SignIn = () => {
             toast.error(response.message || 'Sign in failed. Please try again.')
             return
         }
+        if (!response.user) {
+            toast.error('User info is missing.');
+            return
+        }
+        setUserInfo(response.user);
         router.push('/')
     }
 
