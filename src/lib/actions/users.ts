@@ -36,7 +36,6 @@ export const SignInWithEmailStyle = async ({ email, password }: SignInFormData):
                 }
             }
         );
-        console.log('better-auth sign in response', JSON.stringify(response));
         return { success: true, user: response.user };
     } catch (error: unknown) {
         console.error('better-auth error sign in', JSON.stringify(error));
@@ -50,7 +49,7 @@ export const signOut = async () => {
         await auth.api.signOut({ headers: await headers() });
     } catch (error: unknown) {
         console.log('Sign out failed', error)
-        return { success: false, message: error instanceof APIError ?  error.body?.message : 'An error occurred during sign in.' };
+        return { success: false, message: error instanceof APIError ?  error.body?.message : 'An error occurred during sign out.' };
     }
 }
 
@@ -67,6 +66,6 @@ export const deleteAccount = async (password: string) => {
         return { success: true };
     } catch (e) {
         console.log('Delete account failed', e)
-        return { success: false, error: 'Delete account failed' }
+        return { success: false, message: 'Delete account failed' }
     }
 }

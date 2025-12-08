@@ -9,12 +9,12 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-interface WelcomOptions {
+interface WelcomeOptions {
     to: string,
     username: string,
     intro: string,
 }
-export const sendWelcome = async ({ to, username, intro }: WelcomOptions) => {
+export const sendWelcome = async ({ to, username, intro }: WelcomeOptions) => {
     const html = WELCOME_EMAIL_TEMPLATE
         .replace('{{name}}', username)
     // .replace('{{intro}}', intro); 

@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {toast} from "sonner";
-import {useUserStore} from '@/store/userStrore';
+import {useUserStore} from '@/store/userStore';
 import {deleteAccount, signOut} from "@/lib/actions";
 
 const UserDropDown = () => {

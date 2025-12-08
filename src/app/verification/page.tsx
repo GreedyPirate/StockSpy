@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { auth } from '@/lib/betterAuth/auth';
+import React from 'react';
+import {useRouter} from 'next/navigation';
+
 export default function VerificationEmail() {
   const router = useRouter();
 
@@ -67,5 +67,5 @@ export default function VerificationEmail() {
         </div>
       </div>
     </div>
-  );
+  )
 };

@@ -6,7 +6,7 @@ import FooterLink from '@/components/FooterLink'
 import { SignInWithEmailStyle } from '@/lib/actions';
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
-import { useUserStore } from '@/store/userStrore';
+import { useUserStore } from '@/store/userStore';
 const SignIn = () => {
     const router = useRouter()
     const { setUserInfo } = useUserStore();

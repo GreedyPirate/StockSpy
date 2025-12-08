@@ -38,7 +38,7 @@ export const getAuth = async (): Promise<ReturnType<typeof betterAuth>> => {
                 })
             },
             async afterEmailVerification(user, request) {
-                sendWelcome({
+                await sendWelcome({
                     to: user.email,
                     username: user.name,
                     intro: "We're excited to have you on board! Explore the platform and start your investment journey with us."
