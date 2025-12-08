@@ -9,6 +9,7 @@ const Layout = async ({children} : {children:React.ReactNode}) => {
         redirect('/sign-in');
     }
     if (session.user.emailVerified === false) {
+        console.log('email not verified')
         redirect('/verification');
     }
 

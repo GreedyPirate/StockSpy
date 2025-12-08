@@ -2,9 +2,10 @@ import {betterAuth} from "better-auth";
 import {mongodbAdapter} from "better-auth/adapters/mongodb";
 import {connectToDatabase} from "@/lib/mongodb/connector";
 import {nextCookies} from "better-auth/next-js";
-import {sendVerificationEmail, sendWelcome} from "@/lib/nodemailer/emailClient";
+import {sendVerification, sendWelcome} from "@/lib/nodemailer/emailClient";
 import {customSessionClient} from "better-auth/client/plugins";
 import {customSession} from "better-auth/plugins";
+import { inngest } from "@/lib/inngest/client";
 
 let authInstance: ReturnType<typeof betterAuth> | null = null;
 
@@ -31,18 +32,17 @@ export const getAuth = async (): Promise<ReturnType<typeof betterAuth>> => {
         emailVerification: {
             sendVerificationEmail: async ({user, url, token}, request) => {
                 // nodemailer send
-                await sendVerificationEmail({
+                await sendVerification({
                     to: user.email,
                     username: user.name,
                     verificationLink: url,
                 })
             },
             async afterEmailVerification(user, request) {
-                await sendWelcome({
-                    to: user.email,
-                    username: user.name,
-                    intro: "We're excited to have you on board! Explore the platform and start your investment journey with us."
-                });
+                await inngest.send({
+                    name: 'api/user.created',
+                    data: {...user}
+                })
             },
             sendOnSignUp: true,
             autoSignInAfterVerification: true,

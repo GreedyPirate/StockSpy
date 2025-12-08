@@ -11,7 +11,7 @@ const SignIn = () => {
     const router = useRouter()
     const { setUserInfo } = useUserStore();
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, } = useForm<SignInFormData>({
-        defaultValues: { email: '', password: '' },
+        defaultValues: { email: '', password: 'Yj123456..' },
         mode: 'onBlur',
     })
     const onSubmit = async (data: SignInFormData) => {

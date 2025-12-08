@@ -1,20 +1,30 @@
 'use client';
 
-import React from 'react';
-import {useRouter} from 'next/navigation';
-
+import { useRouter } from 'next/navigation';
+import { sendVerificationEmail, useSession } from '@/lib/betterAuth/authClient';
+import { toast } from 'sonner';
 export default function VerificationEmail() {
   const router = useRouter();
+  const { data: sessionData } = useSession();
+
+  const handleResend = async () => {
+    if (!sessionData?.user?.email) return;
+    await sendVerificationEmail({
+      email: sessionData.user.email,
+      callbackURL: '/'
+    });
+    toast.success('Verification email resent. Please check your inbox.');
+  };
 
   return (
     <div className="min-h-screen bg-[#050505] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-10">
-          <img 
-            src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634" 
-            alt="Signalist Logo" 
-            width="150" 
+          <img
+            src="https://ik.imagekit.io/a6fkjou7d/logo.png?updatedAt=1756378431634"
+            alt="Signalist Logo"
+            width="150"
             height="auto"
             className="mx-auto"
           />
@@ -38,14 +48,14 @@ export default function VerificationEmail() {
 
           {/* Description */}
           <p className="text-[#CCDADC] text-center mb-6">
-            We've sent a verification link to your email. 
+            We've sent a verification link to your email.
             Please check your inbox and click the link to activate your account.
           </p>
 
           {/* Resend Section */}
           <div className="mt-8 pt-6 border-t border-[#30333A]">
             <p className="text-[#9ca3af] text-sm text-center mb-4">
-              Didn't receive the email?
+              Didn't receive the email? <a href="#" onClick={handleResend} className="text-[#FDD458] hover:underline">Resend</a>
             </p>
           </div>
 

@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation'
 const SignUp = () => {
     const router = useRouter()
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, } = useForm<SignUpFormData>({
-        defaultValues: { fullName: '', email: '', password: '', country: '', profession:'', investmentGoals: '', riskTolerance: '', preferredIndustry: '' },
+        defaultValues: { fullName: '', email: '', password: 'Yj123456..', country: '', profession:'', investmentGoals: '', riskTolerance: '', preferredIndustry: '' },
         mode: 'onBlur',
     })
 
