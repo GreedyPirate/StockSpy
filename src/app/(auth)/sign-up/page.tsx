@@ -2,21 +2,31 @@
 import InputItem from '@/components/form/InputItem'
 import { useForm } from "react-hook-form"
 import { SelectionList } from '@/components/form/SelectionList'
-import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS } from '@/lib/Constants'
+import { INVESTMENT_GOALS, PREFERRED_INDUSTRIES, PROFESSION, RISK_TOLERANCE_OPTIONS } from '@/lib/Constants'
 import { Button } from '@/components/ui/button'
 import FooterLink from '@/components/FooterLink'
 import CountrySelectItem from '@/components/form/CountrySelectItem'
-
+import { toast } from "sonner"
+import {SignUpWithEmailStyle} from "@/lib/actions/";
+import { useRouter } from 'next/navigation'
 const SignUp = () => {
+    const router = useRouter()
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, } = useForm<SignUpFormData>({
-        defaultValues: { fullName: '', email: '', password: '', country: '', investmentGoals: '', riskTolerance: '', preferredIndustry: '' },
+        defaultValues: { fullName: '', email: '', password: '', country: '', profession:'', investmentGoals: '', riskTolerance: '', preferredIndustry: '' },
         mode: 'onBlur',
     })
-    const onSubmit = (data: SignUpFormData) => {
-        console.log(data)
+
+    const onSubmit = async (formData: SignUpFormData) => {
+       const response = await SignUpWithEmailStyle(formData)
+       console.log('user sign up', response)
+       if (!response.success) {
+            toast.error(response.message || 'Sign up failed. Please try again.')
+            return
+        }
+        router.push('/verification')
     }
     const vaildStrongPwd = (pwd: string) => {
-        const strongPwdRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+        const strongPwdRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/
         return strongPwdRegex.test(pwd) || "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."
     }
     return (
@@ -58,11 +68,19 @@ const SignUp = () => {
                         label='Country'
                         control={control}
                         error={errors.country} />
+                        
+                    <SelectionList
+                        label='PROFESSION'
+                        name='profession'
+                        placeholder='Select your profession'
+                        control={control}
+                        options={PROFESSION}
+                        error={errors.profession} />
                     <SelectionList
                         label='Investment Goals'
                         name='investmentGoals'
                         placeholder='Select your investment goals'
-                        control={control} 
+                        control={control}
                         options={INVESTMENT_GOALS}
                         error={errors.investmentGoals} />
                     <SelectionList
@@ -87,7 +105,7 @@ const SignUp = () => {
                             {isSubmitting ? 'Creating Account' : 'Start Your Investing Journey'}
                         </Button>
                     </div>
-                    <FooterLink href="/sign-in" text="Already have an account?" label='Sign In'/>
+                    <FooterLink href="/sign-in" text="Already have an account?" label='Sign In' />
                 </form>
             </div>
         </div>

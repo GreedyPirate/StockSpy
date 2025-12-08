@@ -1,18 +1,31 @@
 'use client'
 import InputItem from '@/components/form/InputItem'
 import { useForm } from "react-hook-form"
-import { SelectionList } from '@/components/form/SelectionList'
-import { INVESTMENT_GOALS } from '@/lib/Constants'
 import { Button } from '@/components/ui/button'
 import FooterLink from '@/components/FooterLink'
-
+import { SignInWithEmailStyle } from '@/lib/actions';
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import { useUserStore } from '@/store/userStore';
 const SignIn = () => {
+    const router = useRouter()
+    const { setUserInfo } = useUserStore();
     const { register, handleSubmit, control, formState: { errors, isSubmitting }, } = useForm<SignInFormData>({
         defaultValues: { email: '', password: '' },
         mode: 'onBlur',
     })
-    const onSubmit = (data: SignInFormData) => {
-        console.log(data)
+    const onSubmit = async (data: SignInFormData) => {
+        const response = await SignInWithEmailStyle(data);
+        if (!response.success) {
+            toast.error(response.message || 'Sign in failed. Please try again.')
+            return
+        }
+        if (!response.user) {
+            toast.error('User info is missing.');
+            return
+        }
+        setUserInfo(response.user);
+        router.push('/')
     }
 
     return (

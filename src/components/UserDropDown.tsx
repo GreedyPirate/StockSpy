@@ -14,7 +14,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
+import {toast} from "sonner";
+import {useUserStore} from '@/store/userStore';
+import {deleteAccount, signOut} from "@/lib/actions";
 
 const UserDropDown = () => {
     const user = {
@@ -23,22 +26,41 @@ const UserDropDown = () => {
         avatar: 'https://avatars.githubusercontent.com/u/14834990?v=4',
     }
     const router = useRouter();
+    const {clearUserInfo} = useUserStore();
+    const handleSignOut = async () => {
+        await signOut()
+        clearUserInfo();
+        router.push('/sign-in')
+    }
+
+    const handleDelete = async () => {
+        console.log('delete account')
+        const resp = await deleteAccount('Yj123456..')
+        if (resp.success) {
+            toast.success('Account deleted successfully')
+            router.push('/sign-in')
+        } else {
+            toast.error('Delete account failed. Please try again.')
+        }
+    }
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 {
                     user.avatar ?
                         (
-                            <Image src={user.avatar} alt={user.name} width={460} height={460} className='w-10 h-10 rounded-full'/>
+                            <Image src={user.avatar} alt={user.name} width={460} height={460}
+                                   className='w-10 h-10 rounded-full'/>
                         ) : (
-                            <div className='bg-purple-900 h-10 w-10 text-xl rounded-full text-center leading-10 font-semibold hover:cursor-pointer'>
+                            <div
+                                className='bg-purple-900 h-10 w-10 text-xl rounded-full text-center leading-10 font-semibold hover:cursor-pointer'>
                                 {user.name.charAt(0).toUpperCase()}
                             </div>
                         )
                 }
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 mt-1 bg-gray-700" align="start">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
                         Profile
@@ -57,7 +79,7 @@ const UserDropDown = () => {
                         <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator/>
                 <DropdownMenuGroup>
                     <DropdownMenuItem>Team</DropdownMenuItem>
                     <DropdownMenuSub>
@@ -66,7 +88,7 @@ const UserDropDown = () => {
                             <DropdownMenuSubContent>
                                 <DropdownMenuItem>Email</DropdownMenuItem>
                                 <DropdownMenuItem>Message</DropdownMenuItem>
-                                <DropdownMenuSeparator />
+                                <DropdownMenuSeparator/>
                                 <DropdownMenuItem>More...</DropdownMenuItem>
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
@@ -76,12 +98,12 @@ const UserDropDown = () => {
                         <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator/>
                 <DropdownMenuItem>GitHub</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuItem disabled>API</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => router.push('/sign-in')}>
+                <DropdownMenuItem onClick={handleDelete}>Delete Account</DropdownMenuItem>
+                <DropdownMenuSeparator/>
+                <DropdownMenuItem onClick={handleSignOut}>
                     Log out
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
