@@ -53,7 +53,6 @@ export const getAuth = async (): Promise<ReturnType<typeof betterAuth>> => {
             nextCookies(),
             customSessionClient<typeof auth>(),
             customSession(async ({user, session}) => {
-                console.log('customSession', session);
                 return {
                     user: {
                         ...user,
