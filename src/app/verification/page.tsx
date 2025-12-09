@@ -55,7 +55,7 @@ export default function VerificationEmail() {
           {/* Resend Section */}
           <div className="mt-8 pt-6 border-t border-[#30333A]">
             <p className="text-[#9ca3af] text-sm text-center mb-4">
-              Didn't receive the email? <a href="#" onClick={handleResend} className="text-[#FDD458] hover:underline">Resend</a>
+              Didn't receive the email? <button onClick={handleResend} className="text-[#FDD458] hover:underline">Resend</button>
             </p>
           </div>
 

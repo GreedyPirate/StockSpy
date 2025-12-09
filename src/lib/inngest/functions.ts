@@ -12,7 +12,7 @@ export const sendPersonalizedWelcomeEmail = inngest.createFunction(
             - Risk tolerance: ${event.data.riskTolerance}
             - Preferred industry: ${event.data.preferredIndustry}
         `
-        const prompt = PERSONALIZED_WELCOME_EMAIL_PROMPT.replace("{{user_profile}}", userProfile);
+        const prompt = PERSONALIZED_WELCOME_EMAIL_PROMPT.replace("{{userProfile}}", userProfile);
         const response = await step.ai.infer("Generate personalized welcome email intro", {
             model: step.ai.models.gemini({ model: 'gemini-2.5-flash-lite' }),
             body: {

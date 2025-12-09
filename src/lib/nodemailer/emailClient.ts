@@ -1,6 +1,6 @@
 import nodemailer, { SendMailOptions } from "nodemailer";
 import { VERIFY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "./templates";
-import { V } from "node_modules/better-auth/dist/index-COnelCGa.mjs";
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
