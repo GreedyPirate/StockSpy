@@ -6,7 +6,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <main className="min-h-screen bg-gray-900 grid grid-rows-[8.5fr_1.5fr] gap-y-10 lg:grid-rows-none lg:grid-cols-[5fr_5fr] xl:grid-rows-none xl:grid-cols-[4fr_6fr]">
             <section className='px-10 lg:px-16 flex flex-col'>
                 <Link href='/' className="auth-logo">
-                    <Image src='/assets/icons/logo.svg' alt="StockSpy" width={140} height={32}
+                    <img src='/assets/icons/logo.svg' alt="StockSpy" width={140} height={32}
                         className='h-8 w-auto cursor-pointer'
                     />
                 </Link>

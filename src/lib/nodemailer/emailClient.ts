@@ -1,6 +1,6 @@
 import nodemailer, { SendMailOptions } from "nodemailer";
 import { VERIFY_EMAIL_TEMPLATE, WELCOME_EMAIL_TEMPLATE } from "./templates";
-import { V } from "node_modules/better-auth/dist/index-COnelCGa.mjs";
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -17,7 +17,7 @@ interface WelcomeOptions {
 export const sendWelcome = async ({ to, username, intro }: WelcomeOptions) => {
     const html = WELCOME_EMAIL_TEMPLATE
         .replace('{{name}}', username)
-    // .replace('{{intro}}', intro); 
+        .replace('{{intro}}', intro);
 
     const info = await transporter.sendMail({
         from: process.env.NODEMAILER_GOOGLE_USER!,
@@ -34,7 +34,7 @@ interface VerificationOptions {
     username: string,
     verificationLink: string,
 }
-export const sendVerificationEmail = async ({ to, username, verificationLink }: VerificationOptions) => {
+export const sendVerification = async ({ to, username, verificationLink }: VerificationOptions) => {
     console.log('sending verification email to', to);
     const html = VERIFY_EMAIL_TEMPLATE
         .replace('{{name}}', username)

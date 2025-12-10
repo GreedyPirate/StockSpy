@@ -5,10 +5,7 @@ import {headers} from "next/headers";
 
 const Layout = async ({children} : {children:React.ReactNode}) => {
     const session = await auth.api.getSession({headers: await headers()});
-    if(!session?.user){
-        redirect('/sign-in');
-    }
-    if (session.user.emailVerified === false) {
+    if (session?.user.emailVerified === false) {
         redirect('/verification');
     }
 

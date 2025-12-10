@@ -37,7 +37,7 @@ export const connectToDatabase = async () => {
                 // 成功连接后，设置 conn 
                 cached.conn = m;
                 if (process.env.NODE_ENV !== 'production') {
-                    console.log(`Connected to database: ${MONGODB_URI.substring(0, 30)}...`);
+                    console.trace(`Connected to database: ${MONGODB_URI.substring(0, 30)}...`);
                 }
                 return m;
             });
